@@ -7,7 +7,6 @@
 
 #include "ui.h"
 #include "app_ui_ctrl.h"
-#include "OpenAI.h"
 #include "esp_ota_ops.h"
 #include "esp_system.h"
 #include "esp_log.h"

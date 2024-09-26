@@ -46,8 +46,6 @@ void app_main(void)
 
     char ssid[SSID_SIZE] = {0};
     char password[PASSWORD_SIZE] = {0};
-    char key[KEY_SIZE] = {0};
-    char url[URL_SIZE] = {0};
 
     s_event_group = xEventGroupCreate();
 
@@ -83,25 +81,6 @@ void app_main(void)
             ESP_LOGI(TAG, "stored password:%s", password);
         }
 
-        buf_len_long = sizeof(key);
-        err = nvs_get_str(my_handle, "ChatGPT_key", key, &buf_len_long);
-        if (err != ESP_OK || buf_len_long == 0) {
-            ESP_ERROR_CHECK(nvs_set_str(my_handle, "ChatGPT_key", CONFIG_OPENAI_API_KEY));
-            ESP_ERROR_CHECK(nvs_commit(my_handle));
-            ESP_LOGI(TAG, "no ChatGPT key, give a init value to key");
-        } else {
-            ESP_LOGI(TAG, "stored ChatGPT key:%s", key);
-        }
-
-        buf_len_long = sizeof(url);
-        err = nvs_get_str(my_handle, "Base_url", url, &buf_len_long);
-        if (err != ESP_OK || buf_len_long == 0) {
-            ESP_ERROR_CHECK(nvs_set_str(my_handle, "Base_url", CONFIG_OPENAI_URL));
-            ESP_ERROR_CHECK(nvs_commit(my_handle));
-            ESP_LOGI(TAG, "no base url, give a init value to key");
-        } else {
-            ESP_LOGI(TAG, "stored base url:%s", url);
-        }
     }
     nvs_close(my_handle);
 
@@ -157,25 +136,6 @@ void app_main(void)
                 return;
             }
             ESP_LOGD(TAG, "Password", password);
-
-            buf_len_long = sizeof(key);
-            err = nvs_get_str(my_handle, "ChatGPT_key", key, &buf_len_long);
-            if (err != ESP_OK) {
-                ESP_LOGE(TAG, "Failed to read 'ChatGPT_key' from NVS: %s", esp_err_to_name(err));
-                nvs_close(my_handle);
-                return;
-            }
-            ESP_LOGD(TAG, "OpenAI Key", key);
-
-            buf_len_long = sizeof(url);
-            err = nvs_get_str(my_handle, "Base_url", url, &buf_len_long);
-            if (err != ESP_OK) {
-                ESP_LOGE(TAG, "Failed to read 'BASE_url' from NVS: %s", esp_err_to_name(err));
-                nvs_close(my_handle);
-                return;
-            }
-            ESP_LOGD(TAG, "BASE url", url);
-            nvs_close(my_handle);
         }
 
         vTaskDelay(pdMS_TO_TICKS(1000));

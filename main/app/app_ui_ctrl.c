@@ -13,8 +13,8 @@
 #include "ui_helpers.h"
 #include "ui.h"
 
-#define LABEL_WIFI_TEXT                 "Connecting to Wi-Fi\n"
-#define LABEL_NOT_WIFI_TEXT                 "Not Connected to Wi-Fi\n"
+#define LABEL_WIFI_TEXT                 "正在连接网络\n"
+#define LABEL_NOT_WIFI_TEXT             "无法连接网络\n"
 #define LABEL_WIFI_DOT_COUNT_MAX        (10)
 #define WIFI_CHECK_TIMER_INTERVAL_S     (1)
 #define REPLY_SCROLL_TIMER_INTERVAL_MS  (1000)
@@ -88,7 +88,7 @@ static void show_panel_timer_handler(struct _lv_timer_t *t)
         hide_panel[1] = ui_PanelGet;
         hide_panel[2] = ui_PanelReply;
         lv_obj_clear_flag(ui_LabelListenSpeak, LV_OBJ_FLAG_HIDDEN);
-        lv_label_set_text(ui_LabelListenSpeak, "Listening ...");
+        lv_label_set_text(ui_LabelListenSpeak, "聆听中...");
         // Reset flags and timer of reply
         reply_content_get = false;
         reply_audio_start = false;
@@ -101,7 +101,7 @@ static void show_panel_timer_handler(struct _lv_timer_t *t)
         hide_panel[1] = ui_PanelListen;
         hide_panel[2] = ui_PanelReply;
         lv_obj_clear_flag(ui_LabelListenSpeak, LV_OBJ_FLAG_HIDDEN);
-        lv_label_set_text(ui_LabelListenSpeak, "Thinking ...");
+        lv_label_set_text(ui_LabelListenSpeak, "思考中 ...");
         break;
     case UI_CTRL_PANEL_REPLY:
         show_panel = ui_PanelReply;

@@ -52,13 +52,13 @@ void ui_ScreenSetup_screen_init(void)
     lv_obj_set_width(ui_LabelSetupWifi, LV_SIZE_CONTENT);   /// 88
     lv_obj_set_height(ui_LabelSetupWifi, LV_SIZE_CONTENT);    /// 10
     lv_obj_set_align(ui_LabelSetupWifi, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_LabelSetupWifi, "Connecting to Wi-Fi\n");
+    lv_label_set_text(ui_LabelSetupWifi, "正在连接网络\n");
     lv_obj_set_style_text_color(ui_LabelSetupWifi, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LabelSetupWifi, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_letter_space(ui_LabelSetupWifi, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_line_space(ui_LabelSetupWifi, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_LabelSetupWifi, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_LabelSetupWifi, &ui_font_PingFangEN20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelSetupWifi, &ui_font_KaiTiCN20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_ImageSetupWifiReset = lv_img_create(ui_PanelSetupWifi);
     lv_img_set_src(ui_ImageSetupWifiReset, &ui_img_reset_icon_png);
@@ -102,30 +102,24 @@ void ui_ScreenSetup_screen_init(void)
     lv_obj_set_x(ui_LabelSetupStepContent, lv_pct(0));
     lv_obj_set_y(ui_LabelSetupStepContent, lv_pct(20));
     lv_obj_set_align(ui_LabelSetupStepContent, LV_ALIGN_TOP_MID);
-#if !CONFIG_BSP_BOARD_ESP32_S3_BOX_Lite
     lv_label_set_text(ui_LabelSetupStepContent,
-                      "1. Wake up the device using \"Hi ESP\".\n2. Ask a question within 10 seconds and wait for a reply.\n3.  In sleep mode, click screen can wake up the device. ");
+                      "1. 说 \"Hi ESP\" 唤醒设备.\n2. 在 10 秒内询问问题.\n3. 睡眠模式下点击屏幕可以唤醒设备");
     lv_obj_set_style_text_line_space(ui_LabelSetupStepContent, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-#else
-    lv_label_set_text(ui_LabelSetupStepContent,
-                      "1. Wake up the device using \"Hi ESP\".\n2. Ask a question within 10 seconds and wait for a reply.\n3. In sleep mode, click \"Enter\" button can wake up the device.\n4. Long press \"Enter\" button to enter/exit Settings.");
-    lv_obj_set_style_text_line_space(ui_LabelSetupStepContent, 7, LV_PART_MAIN | LV_STATE_DEFAULT);
-#endif
     lv_obj_set_style_text_color(ui_LabelSetupStepContent, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LabelSetupStepContent, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_letter_space(ui_LabelSetupStepContent, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_LabelSetupStepContent, &ui_font_PingFangEN14, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelSetupStepContent, &ui_font_KaiTiCN20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelSetupStepTile = lv_label_create(ui_PanelSetupSteps);
     lv_obj_set_width(ui_LabelSetupStepTile, 230);
     lv_obj_set_height(ui_LabelSetupStepTile, LV_SIZE_CONTENT);    /// 140
     lv_obj_set_x(ui_LabelSetupStepTile, 45);
     lv_obj_set_y(ui_LabelSetupStepTile, 15);
-    lv_label_set_text(ui_LabelSetupStepTile, "Steps");
+    lv_label_set_text(ui_LabelSetupStepTile, "步骤");
     lv_obj_set_style_text_color(ui_LabelSetupStepTile, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LabelSetupStepTile, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_LabelSetupStepTile, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_LabelSetupStepTile, &ui_font_PingFangEN20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelSetupStepTile, &ui_font_KaiTiCN20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_ButtonSetup = lv_btn_create(ui_PanelSetupSteps);
     lv_obj_set_width(ui_ButtonSetup, 72);

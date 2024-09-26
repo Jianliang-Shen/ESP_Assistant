@@ -16,11 +16,11 @@ void ui_ScreenSettings_screen_init(void)
     lv_obj_set_height(ui_LabelSettingsTile, 23);
     lv_obj_set_x(ui_LabelSettingsTile, 45);
     lv_obj_set_y(ui_LabelSettingsTile, 15);
-    lv_label_set_text(ui_LabelSettingsTile, "Settings");
+    lv_label_set_text(ui_LabelSettingsTile, "设置");
     lv_obj_set_style_text_color(ui_LabelSettingsTile, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LabelSettingsTile, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_LabelSettingsTile, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_LabelSettingsTile, &ui_font_PingFangEN20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelSettingsTile, &ui_font_KaiTiCN20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_PanelSettings = lv_obj_create(ui_ScreenSettings);
     lv_obj_set_width(ui_PanelSettings, lv_pct(100));
@@ -126,13 +126,13 @@ void ui_ScreenSettings_screen_init(void)
     lv_obj_set_width(ui_LabelSettingsRegion, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_LabelSettingsRegion, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelSettingsRegion, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_LabelSettingsRegion, "Region Select");
+    lv_label_set_text(ui_LabelSettingsRegion, "模型选择");
     lv_obj_set_style_text_color(ui_LabelSettingsRegion, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LabelSettingsRegion, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_LabelSettingsRegion, &ui_font_PingFangEN16, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelSettingsRegion, &ui_font_KaiTiCN20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_DropdownSettingsRegion = lv_dropdown_create(ui_PanelSettingsRegion);
-    lv_dropdown_set_options(ui_DropdownSettingsRegion, "Espressif\nOpenAI");
+    lv_dropdown_set_options(ui_DropdownSettingsRegion, "Qwen\nLlama");
     lv_obj_set_width(ui_DropdownSettingsRegion, lv_pct(33));
     lv_obj_set_height(ui_DropdownSettingsRegion, lv_pct(100));
     lv_obj_set_x(ui_DropdownSettingsRegion, 2);

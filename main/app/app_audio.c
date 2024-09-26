@@ -39,7 +39,7 @@ uint8_t *audio_rx_buffer = NULL;
 audio_play_finish_cb_t audio_play_finish_cb = NULL;
 
 extern sr_data_t *g_sr_data;
-extern esp_err_t start_openai(uint8_t *audio, int audio_len);
+extern esp_err_t start_answer(uint8_t *audio, int audio_len);
 extern int Cache_WriteBack_Addr(uint32_t addr, uint32_t size);
 
 /* main function */
@@ -312,12 +312,12 @@ void sr_handler_task(void *pvParam)
         if (ESP_MN_STATE_TIMEOUT == result.state) {
             ESP_LOGI(TAG, "ESP_MN_STATE_TIMEOUT");
             audio_record_stop();
-            FILE *fp = fopen("/spiffs/waitPlease.mp3", "r");
+            FILE *fp = fopen("/spiffs/ok.mp3", "r");
             if (fp) {
                 audio_player_play(fp);
             }
             if (WIFI_STATUS_CONNECTED_OK == wifi_connected_already()) {
-                start_openai((uint8_t *)record_audio_buffer, record_total_len);
+                start_answer((uint8_t *)record_audio_buffer, record_total_len);
             }
             continue;
         }
@@ -336,8 +336,8 @@ void sr_handler_task(void *pvParam)
         if (ESP_MN_STATE_DETECTED & result.state) {
             ESP_LOGI(TAG, "STOP:%d", result.command_id);
             audio_record_stop();
-            audio_play_task("/spiffs/echo_en_ok.wav");
-            //How to stop the transmission, when start_openai begins.
+            audio_play_task("/spiffs/echo_cn_ok.wav");
+            //How to stop the transmission, when start_answer begins.
             continue;
         }
     }

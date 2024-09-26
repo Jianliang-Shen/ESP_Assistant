@@ -52,7 +52,7 @@ void ui_ScreenSetup_screen_init(void)
     lv_obj_set_y(ui_LabelSetupStepContent, lv_pct(20));
     lv_obj_set_align(ui_LabelSetupStepContent, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_LabelSetupStepContent,
-                      "1. Connect ESP-Box to PC.\n2. Open \"ESP-Box\" folder.\n3. Edit \"CONFIG.INI\" file with Wi-Fi SSID, password, and OpenAI key.\n4. Save the file.\n5. Restart the device.");
+                      "1. 连接 ESP-Box 至电脑.\n2. 打开 \"ESP-Box\" 文件夹.\n3. 修改 \"CONFIG.INI\" 文件中的 Wi-Fi SSID, password.\n4. 保存文件.\n5. 重启设备.");
     lv_obj_set_style_text_color(ui_LabelSetupStepContent, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LabelSetupStepContent, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_letter_space(ui_LabelSetupStepContent, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -86,7 +86,7 @@ void ui_ScreenSetup_screen_init(void)
     lv_obj_set_width(ui_LabelSetupBtn, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_LabelSetupBtn, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_LabelSetupBtn, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_LabelSetupBtn, "Restart");
+    lv_label_set_text(ui_LabelSetupBtn, "重启");
     lv_obj_set_style_text_color(ui_LabelSetupBtn, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LabelSetupBtn, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_LabelSetupBtn, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);

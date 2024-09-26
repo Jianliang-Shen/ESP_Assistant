@@ -16,11 +16,11 @@ void ui_ScreenReset_screen_init(void)
     lv_obj_set_height(ui_LabelResetTitle, LV_SIZE_CONTENT);    /// 140
     lv_obj_set_x(ui_LabelResetTitle, 45);
     lv_obj_set_y(ui_LabelResetTitle, 15);
-    lv_label_set_text(ui_LabelResetTitle, "Factory Reset");
+    lv_label_set_text(ui_LabelResetTitle, "恢复出厂");
     lv_obj_set_style_text_color(ui_LabelResetTitle, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LabelResetTitle, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_LabelResetTitle, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_LabelResetTitle, &ui_font_PingFangEN20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelResetTitle, &ui_font_KaiTiCN20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LabelResetContent = lv_label_create(ui_ScreenReset);
     lv_obj_set_width(ui_LabelResetContent, lv_pct(88));
@@ -29,12 +29,12 @@ void ui_ScreenReset_screen_init(void)
     lv_obj_set_y(ui_LabelResetContent, lv_pct(20));
     lv_obj_set_align(ui_LabelResetContent, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_LabelResetContent,
-                      "1. Press the \"OK\" button to enter factory reset mode.\n2. Connect the box to your PC and add the OpenAI key and Wi-Fi credentials.\n3. Follow the on-screen prompts to complete the setup process.");
+                      "1. 按下按钮进入恢复出厂设置.\n2. 连接电脑并设置服务器IP和端口.\n3. 按照屏幕上的提示完成接下来的操作.");
     lv_obj_set_style_text_color(ui_LabelResetContent, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LabelResetContent, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_letter_space(ui_LabelResetContent, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_line_space(ui_LabelResetContent, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_LabelResetContent, &ui_font_PingFangEN14, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LabelResetContent, &ui_font_KaiTiCN20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_ButtonResetConfirm = lv_btn_create(ui_ScreenReset);
     lv_obj_set_width(ui_ButtonResetConfirm, 72);
