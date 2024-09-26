@@ -1,6 +1,7 @@
 squareline/cache
 squareline/backup
 chat_gpt_events.py
+**/.cache
 
 .config
 *.o
