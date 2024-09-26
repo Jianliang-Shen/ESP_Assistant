@@ -2,6 +2,10 @@ squareline/cache
 squareline/backup
 chat_gpt_events.py
 **/.cache
+**/asr_result.txt
+**/demo.wav
+**/output*
+**/ollama*
 
 .config
 *.o

@@ -15,6 +15,30 @@ import numpy as np
 
 import ffmpeg
 
+def compress_audio(input_file, output_file, target_size_kb=10):
+    try:
+        # 目标文件大小（字节）
+        target_size_bytes = target_size_kb * 1024
+        
+        # 获取输入文件信息
+        probe = ffmpeg.probe(input_file)
+        duration = float(probe['format']['duration'])  # 获取音频时长
+        
+        # 计算所需的比特率（bps）
+        target_bitrate = (target_size_bytes * 8) / duration  # 单位：bps
+        
+        # 使用ffmpeg进行压缩
+        (
+            ffmpeg
+            .input(input_file)
+            .output(output_file, audio_bitrate=f'{int(target_bitrate)}', format='mp3')
+            .run()
+        )
+        
+        print(f"Compressed file saved as: {output_file}")
+    except ffmpeg.Error as e:
+        print('ffmpeg error:', e.stderr.decode('utf8'))
+
 def convert_wav(input_file, output_file):
     try:
         # 使用ffmpeg将WAV文件转换为指定参数
@@ -123,14 +147,19 @@ def get_wav():
     if os.path.exists(f'{script_dir}/output.wav'):
         os.remove(f'{script_dir}/output.wav')
 
+    if os.path.exists(f'{script_dir}/output.mp3'):
+        os.remove(f'{script_dir}/output.mp3')
+
     convert_wav(audio_file_path, f'{script_dir}/output.wav')
 
-    return send_file(f'{script_dir}/output.wav', mimetype='audio/wav')
+    compress_audio(f'{script_dir}/output.wav', f'{script_dir}/output.mp3', 20)
+
+    return send_file(f'{script_dir}/output.mp3', mimetype='audio/mpeg')
 
 if __name__ == '__main__':
     modelfile='''
     FROM llama3.1
-    SYSTEM 你是一个语音助手，回复必须不超过二十个字，如果用户让你讲一个很长的故事，你会回答用户，"对不起，我无法生成长文字"
+    SYSTEM 你是一个语音助手，回复必须不超过二十个字，精简是你回答的第一要素
     '''
 
     ollama.create(model='assistant', modelfile=modelfile)

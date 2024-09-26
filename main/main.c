@@ -35,13 +35,16 @@ static char *TAG = "app_main";
 static sys_param_t *sys_param = NULL;
 
 #define CHUNK_SIZE 10240 // 每次上传的音频块大小
-#define MAX_HTTP_OUTPUT_BUFFER (1024 * 20)
+#define MAX_HTTP_MP3_OUTPUT_BUFFER (1024 * 30)
+#define MAX_HTTP_OUTPUT_BUFFER (1024)
 static char http_response[MAX_HTTP_OUTPUT_BUFFER];
-#define AUDIO_FILE_PATH  "/spiffs/result.wav"                                                                                               \
+#define AUDIO_FILE_PATH  "/spiffs/result.mp3"                                                                                               \
 
 esp_err_t _http_mp3_event_handler(esp_http_client_event_t *evt) {
     static FILE *file = NULL;
-    static int total_bytes_received = 0;
+    // static int total_bytes_received = 0;
+    static char buffer[MAX_HTTP_MP3_OUTPUT_BUFFER];
+    static int buffer_pos = 0;
 
     switch (evt->event_id) {
     case HTTP_EVENT_ON_DATA:
@@ -54,24 +57,28 @@ esp_err_t _http_mp3_event_handler(esp_http_client_event_t *evt) {
                     return ESP_FAIL;
                 }
             }
-            // 将接收到的音频块写入文件
-            size_t written = fwrite(evt->data, 1, evt->data_len, file);
-            if (written != evt->data_len) {
-                ESP_LOGE(TAG, "File write failed");
-                fclose(file);
-                return ESP_FAIL;
+
+            if (buffer_pos + evt->data_len < MAX_HTTP_MP3_OUTPUT_BUFFER) {
+                memcpy(buffer + buffer_pos, evt->data, evt->data_len);
+                buffer_pos += evt->data_len;
             }
-            total_bytes_received += evt->data_len;
-            // ESP_LOGI(TAG, "Received and wrote %d bytes, total %d", evt->data_len, total_bytes_received);
         }
         break;
     case HTTP_EVENT_ON_FINISH:
+        size_t written = fwrite(buffer, 1, buffer_pos, file);
+        if (written != buffer_pos) {
+            ESP_LOGE(TAG, "File write failed");
+            fclose(file);
+            return ESP_FAIL;
+        }
+
         // 完成时关闭文件
         if (file != NULL) {
             fclose(file);
-            ESP_LOGI(TAG, "File successfully written, total size: %d bytes", total_bytes_received);
+            ESP_LOGI(TAG, "File successfully written, total size: %d bytes", buffer_pos);
             file = NULL;
-            total_bytes_received = 0;
+
+            buffer_pos = 0;
         }
 
         break;
@@ -90,16 +97,6 @@ void download_and_play_mp3() {
 
     esp_http_client_handle_t client = esp_http_client_init(&config);
     esp_err_t err = esp_http_client_perform(client);
-
-    audio_play_task(AUDIO_FILE_PATH);
-
-        err = unlink(AUDIO_FILE_PATH);
-    if (err == 0) {
-        ESP_LOGI("File Delete", "Successfully deleted %s", AUDIO_FILE_PATH);
-    } else {
-        ESP_LOGE("File Delete", "Failed to delete %s", AUDIO_FILE_PATH);
-    }
-
     esp_http_client_cleanup(client);
 }
 
@@ -203,6 +200,7 @@ esp_err_t start_answer(uint8_t *audio, int audio_len) {
     esp_err_t ret = ESP_OK;
 
     send_audio_data(audio, audio_len);
+    ui_ctrl_show_panel(UI_CTRL_PANEL_GET, 0);
 
     wait_for_response("http://192.168.71.83:5000/get_response", 10000);
     ui_ctrl_label_show_text(UI_CTRL_LABEL_REPLY_QUESTION, http_response);

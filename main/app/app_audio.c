@@ -316,8 +316,20 @@ void sr_handler_task(void *pvParam)
             if (fp) {
                 audio_player_play(fp);
             }
+
+            esp_err_t err = unlink("/spiffs/result.mp3");
+            if (err == 0) {
+                ESP_LOGI("File Delete", "Successfully deleted %s", "/spiffs/result.mp3");
+            } else {
+                ESP_LOGE("File Delete", "Failed to delete %s", "/spiffs/result.mp3");
+            }
+
             if (WIFI_STATUS_CONNECTED_OK == wifi_connected_already()) {
                 start_answer((uint8_t *)record_audio_buffer, record_total_len);
+                FILE *fp = fopen("/spiffs/result.mp3", "r");
+                if (fp) {
+                    audio_player_play(fp);
+                }
             }
             continue;
         }
