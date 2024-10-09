@@ -35,7 +35,6 @@ bool record_flag = false;
 uint32_t record_total_len = 0;
 uint32_t file_total_len = 0;
 static uint8_t *record_audio_buffer = NULL;
-uint8_t *audio_rx_buffer = NULL;
 audio_play_finish_cb_t audio_play_finish_cb = NULL;
 
 extern sr_data_t *g_sr_data;
@@ -112,15 +111,12 @@ void audio_record_init()
 {
     /* Create file if record to SD card enabled*/
 #if DEBUG_SAVE_PCM
-    record_audio_buffer = heap_caps_calloc(1, FILE_SIZE, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+    record_audio_buffer = heap_caps_calloc(1, MAX_FILE_SIZE, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     assert(record_audio_buffer);
-    printf("successfully created record_audio_buffer with a size: %zu\n", FILE_SIZE);
-    audio_rx_buffer = heap_caps_calloc(1, MAX_FILE_SIZE, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
-    assert(audio_rx_buffer);
-    printf("audio_rx_buffer with a size: %zu\n", MAX_FILE_SIZE);
+    printf("successfully created record_audio_buffer with a size: %zu\n", MAX_FILE_SIZE);
 #endif
 
-    if (record_audio_buffer == NULL || audio_rx_buffer == NULL) {
+    if (record_audio_buffer == NULL) {
         printf("Error: Failed to allocate memory for buffers\n");
         return; // Return or handle the error condition appropriately
     }
@@ -182,7 +178,7 @@ static esp_err_t audio_record_stop()
 #if DEBUG_SAVE_PCM
     record_flag = false;
 #if PCM_ONE_CHANNEL
-    record_total_len *= 1;
+    record_total_len *= 2; // FIXME: The I2S has 2 channels. Here is a bug
 #else
     record_total_len *= 2;
 #endif

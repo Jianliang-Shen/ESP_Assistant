@@ -75,7 +75,7 @@ esp_err_t _http_mp3_event_handler(esp_http_client_event_t *evt) {
         // 完成时关闭文件
         if (file != NULL) {
             fclose(file);
-            ESP_LOGI(TAG, "File successfully written, total size: %d bytes", buffer_pos);
+            ESP_LOGI(TAG, "Result MP3 file successfully written, total size: %d bytes", buffer_pos);
             file = NULL;
 
             buffer_pos = 0;
@@ -90,7 +90,7 @@ esp_err_t _http_mp3_event_handler(esp_http_client_event_t *evt) {
 
 void download_and_play_mp3() {
     esp_http_client_config_t config = {
-        .url = "http://192.168.71.83:5000/get_mp3",
+        .url = "http://192.168.71.85:5000/get_mp3",
         .event_handler = _http_mp3_event_handler,
         .timeout_ms = 20000
     };
@@ -153,7 +153,7 @@ void validate_post_data(esp_http_client_handle_t client) {
 // 发送音频数据到服务器
 void send_audio_data(uint8_t *audio, int audio_len) {
     esp_http_client_config_t config = {
-        .url = "http://192.168.71.83:5000/upload",
+        .url = "http://192.168.71.85:5000/upload",
         .event_handler = _http_event_handler,
         .timeout_ms = 10000 // 设置超时为 10 秒
     };
@@ -170,7 +170,7 @@ void send_audio_data(uint8_t *audio, int audio_len) {
 
         esp_err_t err = esp_http_client_perform(client);
         if (err == ESP_OK) {
-            ESP_LOGI(TAG, "Chunk uploaded successfully, length: %d", chunk_len);
+            // ESP_LOGI(TAG, "Chunk uploaded successfully, length: %d", chunk_len);
             sent_len += chunk_len;
         } else {
             ESP_LOGE(TAG, "Error in uploading chunk: %s", esp_err_to_name(err));
@@ -202,10 +202,10 @@ esp_err_t start_answer(uint8_t *audio, int audio_len) {
     send_audio_data(audio, audio_len);
     ui_ctrl_show_panel(UI_CTRL_PANEL_GET, 0);
 
-    wait_for_response("http://192.168.71.83:5000/get_response", 10000);
+    wait_for_response("http://192.168.71.85:5000/get_response", 10000);
     ui_ctrl_label_show_text(UI_CTRL_LABEL_REPLY_QUESTION, http_response);
 
-    wait_for_response("http://192.168.71.83:5000/get_response2", 20000);
+    wait_for_response("http://192.168.71.85:5000/get_response2", 20000);
     ui_ctrl_label_show_text(UI_CTRL_LABEL_REPLY_CONTENT, http_response);
 
     ui_ctrl_show_panel(UI_CTRL_PANEL_REPLY, 0);
